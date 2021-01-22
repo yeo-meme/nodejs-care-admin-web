@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel='stylesheet'  type="text/css" href='/stylesheets/style.css'/>
+    <title>Make a Form</title>
+</head>
+    <body>
+
+    <form class="form-header">
+        <h1>Nalazoo Admin</h1>
+        <p>Admin Sign up</p>
+    </form>
+
+    <form class="form-row" action="/signup" method="POST">
+        <div id="login-wrapper">
+        <div>
+            <label for='full-name'>이름</label>
+            <input id="full-name" name="adminemail" type="text"/>
+        </div>
+
+        <div>
+            <label for="email">Email</label>
+            <input id="email"
+            name="adminname"
+            type="email"
+            placeholder="nalazoo@nalazoo.com"/>
+        </div>
+
+        <div>
+            <label for="full-pass">패스워드</label>
+            <input id="full-pass" name="adminpass" type="password"  placeholder="숫자+영문+특수문자">
+        </div>
+
+        <div>
+            <label for="pass">패스워드 재입력</label>
+            <input id="pass"
+            name="pass"
+            type="pass"
+            placeholder="위에 패스워드를 재입력해주세요" />
+        </div>
+        <div>
+            <button type="submit" class="signupbtn">Sign Up</button>
+        </div>
+        </div>
+    </form>
+</body>
+</head>
