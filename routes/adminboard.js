@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var firestore = require('./firestoreConfig');
-var cdata = require('cdata');
+// var cdata = require('cdata');
 
 const db = firestore.firestore();
 let ref = db.collection('paymentSuccessAndroid');
@@ -51,12 +51,12 @@ router.get('/', function (req,res, next) {
 });
 
 
-router.post('/detail_board', function (req
-                                       ,res,next) {
-
-
-
-    res.redirect('/detail_board');
-});
+// router.post('/detail_board', function (req
+//                                        ,res,next) {
+//
+//
+//
+//     res.redirect('/detail_board');
+// });
 
 module.exports = router;

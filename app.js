@@ -11,6 +11,7 @@ var signUpRouter = require('./routes/signup');
 var logInRouter = require('./routes/login');
 var adminBoardRouter = require('./routes/adminboard');
 var resultHomeRouter = require('./routes/resulthome');
+var detailBoardRouter = require('./routes/detail_board');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/signup', signUpRouter);
 app.use('/login', logInRouter);
 app.use('/adminboard', adminBoardRouter);
 app.use('/resulthome',resultHomeRouter);
+app.use('/detail_board',detailBoardRouter);
 
 
 // catch 404 and forward to error handler

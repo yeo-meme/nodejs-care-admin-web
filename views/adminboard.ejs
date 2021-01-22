@@ -14,13 +14,6 @@
             crossorigin="anonymous"></script>
 </head>
 
-<script>
-    function val(obj) {
-        alert(obj.submit.prototype);
-        obj.submit();
-        console.log("obj :" + obj.rows);
-    }
-</script>
 
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -212,10 +205,10 @@
                         <!--form-->
                         <form role="form" id="go-detail" action="/detail_board" method="post" autocomplete="on">
                             <!--임시 저장소-->
-                            <input type="hidden" name="myValue" id="myValue" value=""/>
+                            <input type="hidden"  name="myValue" id="myValue" value=""/>
                         </form>
 
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>상품주문번호(product_num)</th>
@@ -236,7 +229,7 @@
                                 <tr>
                                     <td type="text">
                                         <!--각 아이템 row에 orderer 클릭시 sendDetailBoard() 아이디 할당해 전달하도록-->
-                                        <a href="#" onclick="sendDetailBoard(doc.id);" class="fromTop brk-btn-start">
+                                        <a href="#" onclick="sendDetailBoard('<%= doc.id%>');" class="fromTop brk-btn-start">
                                             <%= doc.data().orderer %>
                                         </a>
                                     </td>
@@ -282,10 +275,24 @@
 <!--START:사용자 함수 스크립트-->
 <script>
     function sendDetailBoard(id) {
+
+        alert("hi :" + id);
+
         var form = document.getElementById('go-detail'); // form 객체 가져옴
         var setValue = document.getElementById("myValue"); // input 객체 가져옴
         setValue.value = id; // input value 에 id 값 설정
-        form.onsubmit; // submit 발생
+
+        form.action = "/detail_board";
+        form.method =  "POST";
+        form.submit();
+
+        // form.addEventListener("submit", function (event) {
+        //     if(setValue.length === 0){
+        //         alert('Name 필드의 값이 누락 되었습니다'); event.preventDefault();
+        //     } else {
+        //
+        //     }
+        // });
     }
 </script>
 <!--END:사용자 함수 스크립트-->
