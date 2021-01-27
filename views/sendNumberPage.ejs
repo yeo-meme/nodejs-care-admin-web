@@ -205,78 +205,63 @@
                         <!--form-->
                         <form role="form" id="go-detail" action="/detail_board" method="post" autocomplete="on">
                             <!--임시 저장소-->
+                            <input type="hidden" name="delivery_check" id="delivery_check" value="">
                             <input type="hidden"  name="myValue" id="myValue" value=""/>
                         </form>
 
-                        <form role="form" id="go-paging" method="post" autocomplete="on">
-                            <input type="hidden" name="pageValue" id="pageValue" value=""/>
-                        </form>
-                        <input type="search"
-                               width="30%"
-                               class="form-control form-control-sm"
-                               placeholder=""
-                               aria-controls="dataTable">
-
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th></th>
                                 <th>주문번호</th>
-                                <th>주문일시</th>
-                                <th>주문상태</th>
-                                <th>상품번호</th>
-                                <th>상품명</th>
-                                <th>옵션</th>
-                                <th>수량</th>
                                 <th>구매자명</th>
-                                <th>수취인명</th>
+                                <th>택배사</th>
+                                <th>송장번호</th>
+                                <th>구매자연락처</th>
+                                <th>수취인</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            <% if (!snapshot.empty) {%>
-                                <% snapshot.forEach( doc =>{ %>
+                            <% if (snapshot.size > 0) {%>
                                 <!--데이터 반복시작-->
+                                <% snapshot.forEach( (doc, index) => { %>
                                     <tr>
-                                        <td type="text" > </td>
-                                        <td> <%= doc.data().oderDate %></td>
-                                        <td> <%= doc.data().productNumber %></td>
-                                        <td> <%= doc.data().productName %></td>
-                                        <% if( doc.data().orderStatus == '0') { %>
-                                            <td> "새주문"</td>
-                                        <% } else if (doc.data().ordeerStatus == '1') { %>
-                                            <td> "발송중" </td>
-                                        <% } %>
-                                        <td> <%= doc.data().option %></td>
-                                        <td> <%= doc.data().amount %></td>
+                                        <td> <input type="checkbox" name="dn_check" value="checked"></td>
+                                        <td type="text" >
+
+                                            <!--각 아이템 row에 orderer 클릭시 sendDetailBoard() 아이디 할당해 전달하도록-->
+                                            <a href="#" onclick="sendDetailBoard('<%= doc.id%>');" class="fromTop brk-btn-start">
+                                                <%= doc.data().orderNumber %>
+                                            </a>
+                                        </td>
+
+                                        <td> <%= doc.data().orderer %></td>
+                                        <td>
+                                            <select size="1" name="delivery_way">
+                                                <option value="delivery_service" selected>---선택---</option>
+                                                <option value="delivery_service">택배,등기,소포</option>
+                                                <option value="self_service">직접수령</option>
+                                                <option value="quick_service" >퀵서비스</option>
+                                            </select>
+                                        </td>
+                                        <td> <input type="text" id="delivery_number" name="delivery_number"></td>
                                         <td> <%= doc.data().oderer %></td>
                                         <td> <%= doc.data().receiver %></td>
-                                        <% }); %>
+
                                         <script>console.log("orderer", '=>', doc.data().orderer);</script>
                                     </tr>
+                                <% }); %>
                             <%} else {%>
                                 <tr>
-                                    <td colspan="9" type="text">조희 가능한 새로운 주문이 없습니다</td>
+                                    <td colspan="9" type="text">조희 가능한 발송중인 주문이 없습니다</td>
                                 </tr>
                             <% }  %>
 
+
                             </tbody>
                         </table>
-
-
-                        <ul class="pagination">
-
-                            <li class="paginate_button page-item previous disabled" id="dataTable_previous">
-                                <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-
-                            <li class="paginate_button page-item active"><a href="#" aria-controls="dataTable"  tabindex="0" class="page-link">1</a></li>
-<!--                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li-->
-<!--                            ><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>-->
-<!--                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>-->
-<!--                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>-->
-<!--                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>-->
-                            <li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul>
-
+                        <input type="button"  class="favorite styled" onclick="deliveryNumberUpload()" />
                     </div>
                 </div>
             </div>
@@ -305,25 +290,15 @@
 <!--START:사용자 함수 스크립트-->
 <script>
 
-    function page() {
+    function deliveryNumberUpload() {
+        var form = document.getElementById('go-detail');
+        var checked = document.getElementById('delivery_check');
+        checked.value = document.getElementById('dn_check').value;
 
-        alert("하이");
-        alert(document.getElementById('holdId').value);
-
-        var setValue = document.getElementById('pageValue');
-        setValue.value = document.getElementById('holdId').value;
-        var form = document.getElementById('go-paging');
-
-        form.action = '/pageCount'
-        form.method = "POST";
+        form.action = "/sendNumberPage";
+        form.method =  "POST";
         form.submit();
     }
-
-    function movePageMain() {
-    location.href='/adminboard';
-    }
-
-
     function sendDetailBoard(id) {
 
         alert("hi :" + id);

@@ -12,6 +12,9 @@ var logInRouter = require('./routes/login');
 var adminBoardRouter = require('./routes/adminboard');
 var resultHomeRouter = require('./routes/resulthome');
 var detailBoardRouter = require('./routes/detail_board');
+var sendNumberRouter = require('./routes/sendNumberPage');
+var changeOrderRouter = require('./routes/changeOrder');
+var pageCountRouter = require('./routes/pageCount');
 
 var app = express();
 
@@ -36,6 +39,10 @@ app.use('/login', logInRouter);
 app.use('/adminboard', adminBoardRouter);
 app.use('/resulthome',resultHomeRouter);
 app.use('/detail_board',detailBoardRouter);
+app.use('/sendNumberPage',sendNumberRouter);
+app.use('/changeOrder', changeOrderRouter);
+app.use('/pageCount', pageCountRouter);
+
 
 
 // catch 404 and forward to error handler

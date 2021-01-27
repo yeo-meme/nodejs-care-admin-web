@@ -9,6 +9,23 @@
  <title>Static Navigation - SB Admin</title>
  <link href="css/styles.css" rel="stylesheet" />
  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+
+
+
+ <style>
+  table {
+   width: 100%;
+  }
+  table, th, td {
+   border: 1px solid #bcbcbc;
+  }
+  th {
+   padding : 1em;
+  }
+
+
+ </style>
+
 </head>
 <body>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -116,25 +133,85 @@
     </ol>
     <div class="card mb-4">
      <div class="card-body">
-      <div class="detail_order_list">
-      <ul class="order_detail_list">
-          <li><%= value %></li>
-          <li>아이템3</li>
-          <li>아이템4</li>
-          <li>아이템5</li>
-          <li>아이템6</li>
-      </ul>
+
+
+      <!--form-->
+      <form role="form" id="sending_delivery"  method="post" autocomplete="on">
+       <!--임시 저장소-->
+       <input type="hidden"  name="deliveryNumb" id="deliveryNumb" value=""/>
+       <input type="hidden"  name="userDocId" id="userDocId" value=""/>
+      </form>
+
+
+      <caption>상품주문정보 조회</caption>
+      <table border="1">
+
+       <tbody>
+       <!--데이터 반복시작-->
+
+        <tr align="center">
+        <th bgcolor="#D4F4FA">상품명</th>
+        <td colspan="4"><%= snapshot.data().productName%></td>
+       </tr>
+       <tr align="center">
+        <th bgcolor="#D4F4FA">주문상태</th>
+        <td colspan="4"><%= snapshot.data().orderStatus%></td>
+       </tr>
+
+       <tr align="center" >
+        <th bgcolor="#D4F4FA">구매자명</th>
+        <th colspan="4"><%= snapshot.data().orderer%></th>
+       </tr>
+       <tr align="center">
+        <th bgcolor="#D4F4FA">구매자 ID</th>
+        <th colspan="4"><%= snapshot.data().ordererId%></th>
+       </tr>
+       <tr align="center" >
+        <th bgcolor="#D4F4FA">옵션</th>
+        <th><%= snapshot.data().option%></th>
+        <th bgcolor="#D4F4FA">주문수량</th>
+        <th><%= snapshot.data().amount%></th>
+       </tr>
+       <tr align="center">
+        <th bgcolor="#D4F4FA">총 상품금액</th>
+        <th colspan="4"><%= snapshot.data().totalPrice%></th>
+       </tr>
+       </tbody>
+
+      </table>
+
+
+      <caption>배송지 정보</caption>
+      <table border="1" >
+       <tbody>
+
+       <tr align="center" >
+       <th bgcolor="#D4F4FA">수취인명</th>
+       <th ><% snapshot.data().receiver%></th>
+       </tr>
+       <tr align="center" >
+       <th bgcolor="#D4F4FA">연락처</th>
+       <th ><% snapshot.data().ordererPhone%></th>
+       </tr>
+       <tr align="center">
+       <th bgcolor="#D4F4FA">배송지</th>
+       <th ><% snapshot.data().ordererAddress%></th>
+       </tr>
+       <tr align="center" >
+       <th bgcolor="#D4F4FA">배송메모</th>
+       <th ><% snapshot.data().receiverMemo %></th>
+       </tr>
+       </tbody>
+
+      </table>
+      <label for="jb-input-text">운송장번호</label>
+      <select name="delivery_company">
+       <option value="">CJ대한통운</option>
+      </select>
+      <input type="text" id="deliveryNumberTx" >
+      <input class="delivery_button" type="button"  onclick='printDeliveryNumb();'>발송확인</input>
+      <div>
       </div>
-       <label for="invoice_cmp_label">택배사</label>
-       <select name="invoice_cmp_label_box"><option value="cmp_cj">CJ대한통운</option> </select>
-      <label for="invoice">운송장 번호</label>
-       <input type="password" maxlength="15" minlength="4" id="invoice_number"/>
-
-
-      <div></div>
-
-      <button class="edit_btn" type="button">취소</button>
-      <button class="cancel_btn" type="button">확인</button>
 <!--      <p class="mb-0">-->
 <!--       This page is an example of using static navigation. By removing the-->
 <!--       <code>.sb-nav-fixed</code>-->
@@ -162,6 +239,25 @@
   </footer>
  </div>
 </div>
+
+<script>
+ function printDeliveryNumb() {
+  var form = document.getElementById('sending_delivery');
+  var setValue = document.getElementById('deliveryNumb');
+  setValue.value = document.getElementById("deliveryNumberTx").value;
+
+  var userDoc = document.getElementById('userDocId');
+  userDoc.value  = '<%= contentId %>';
+  alert('<%= contentId %>');
+
+  console.log("딜리버리 :" + setValue );
+  form.action = "/adminboard";
+  form.method =  "POST";
+  form.submit();
+
+ }
+ 
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
