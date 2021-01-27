@@ -165,6 +165,20 @@
                         <i class="fas fa-table mr-1"></i>
                         주문현황
                     </div>
+
+
+                    <!--form-->
+                    <form role="form" id="go-detail" action="/detail_board" method="post" autocomplete="on">
+                        <!--임시 저장소-->
+                        <input type="hidden"  name="myValue" id="myValue" value=""/>
+                    </form>
+
+                    <form role="form" id="go-paging" method="post" autocomplete="on">
+                        <input type="hidden" name="pageValue" id="pageValue" value=""/>
+                    </form>
+
+
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -199,7 +213,8 @@
                                     <% snapshot.forEach( doc =>{ %>
                                         <!--데이터 반복시작-->
                                     <tr>
-                                        <td type="text" > </td>
+                                        <td type="text" >
+                                            <a href="#" onclick="sendDetailBoard('<%= doc.id %>');"> <%= doc.data().orderNumber %>  </a> </td>
                                         <td> <%= doc.data().oderDate %></td>
                                         <td> <%= doc.data().productNumber %></td>
                                         <td> <%= doc.data().productName %></td>
@@ -241,6 +256,52 @@
         </footer>
     </div>
 </div>
+<script>
+
+
+
+    function page() {
+
+        alert("하이");
+        alert(document.getElementById('holdId').value);
+
+        var setValue = document.getElementById('pageValue');
+        setValue.value = document.getElementById('holdId').value;
+        var form = document.getElementById('go-paging');
+
+        form.action = '/pageCount'
+        form.method = "POST";
+        form.submit();
+    }
+
+    function movePageMain() {
+        location.href='/adminboard';
+    }
+
+
+
+    function sendDetailBoard(id) {
+
+        alert("hi :" + id);
+
+        var form = document.getElementById('go-detail'); // form 객체 가져옴
+        var setValue = document.getElementById("myValue"); // input 객체 가져옴
+        setValue.value = id; // input value 에 id 값 설정
+
+        form.action = "/detail_board";
+        form.method =  "POST";
+        form.submit();
+
+        // form.addEventListener("submit", function (event) {
+        //     if(setValue.length === 0){
+        //         alert('Name 필드의 값이 누락 되었습니다'); event.preventDefault();
+        //     } else {
+        //
+        //     }
+        // });
+    }
+</script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
