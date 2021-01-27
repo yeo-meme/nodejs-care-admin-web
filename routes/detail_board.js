@@ -18,7 +18,7 @@ router.post('/', function (req,res,next) {
                 return;
             }
             console.log("order :" + snapshot );
-            res.render("detail_board",{snapshot : snapshot , contentId: selectedId });
+            res.render("detail_board",{snapshot : snapshot , selectedId: selectedId });
 
         }).catch(err => {
         console.log("error ", err);

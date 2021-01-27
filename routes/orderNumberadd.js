@@ -1,5 +1,3 @@
-
-
 var express = require('express');
 var router = express.Router();
 var firestore = require('./firestoreConfig');
@@ -7,21 +5,19 @@ var firestore = require('./firestoreConfig');
 const db = firestore.firestore();
 let ref = db.collection('payment');
 
-router.get('/', function (req,res,next) {
+router.get('/', function (req,res, next) {
 
     let query = ref.orderBy('timestamp','desc');
-    query.where('orderStatus', '==', 1).get()
+    query.where('orderStatus', '==', 0).get()
         .then(snapshot => {
             if (snapshot.empty) {
                 console.log("no order");
-                res.render("changeOrder");
                 return;
             }
-            res.render("changeOrder",{snapshot: snapshot});
+            res.render("adminboard",{snapshot: snapshot});
 
         }).catch(err => {
         console.log("error ", err);
     });
 });
-
 module.exports = router;

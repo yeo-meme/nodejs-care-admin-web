@@ -15,6 +15,8 @@ var detailBoardRouter = require('./routes/detail_board');
 var sendNumberRouter = require('./routes/sendNumberPage');
 var changeOrderRouter = require('./routes/changeOrder');
 var pageCountRouter = require('./routes/pageCount');
+var orderNumberRouter = require('./routes/orderNumberadd');
+
 
 var app = express();
 
@@ -42,6 +44,7 @@ app.use('/detail_board',detailBoardRouter);
 app.use('/sendNumberPage',sendNumberRouter);
 app.use('/changeOrder', changeOrderRouter);
 app.use('/pageCount', pageCountRouter);
+app.use('/orderNumberadd', orderNumberRouter);
 
 
 

@@ -23,12 +23,11 @@ router.get('/', function (req,res, next) {
 
 
 router.post('/',function (req,res,next) {
-    var value = req.body.deliveryNumb;
+    // var value = req.body.deliveryNumb;
     var docValue = req.body.userDocId;
-    console.log("post arrvied :" +value + "id :" + docValue);
+    // console.log("post arrvied :" +value + "id :" + docValue);
 
     ref.doc(docValue).update({
-        deliveryNumber : value,
         orderStatus: 1
     });
     res.redirect('adminboard');

@@ -29,7 +29,7 @@
 </head>
 <body>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
- <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+ <a class="navbar-brand" href="/adminboard">Nalazoo</a>
  <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
  <!-- Navbar Search-->
  <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -43,7 +43,8 @@
  <!-- Navbar-->
  <ul class="navbar-nav ml-auto ml-md-0">
   <li class="nav-item dropdown">
-   <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+   <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-user fa-fw"></i></a>
    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
     <a class="dropdown-item" href="#">Settings</a>
     <a class="dropdown-item" href="#">Activity Log</a>
@@ -58,21 +59,22 @@
   <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
    <div class="sb-sidenav-menu">
     <div class="nav">
-     <div class="sb-sidenav-menu-heading">Core</div>
-     <a class="nav-link" href="index.html">
+     <div class="sb-sidenav-menu-heading">new</div>
+     <a class="nav-link" href="/adminboard">
       <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-      Dashboard
+      신규주문
      </a>
-     <div class="sb-sidenav-menu-heading">Interface</div>
+     <div class="sb-sidenav-menu-heading">menu</div>
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
       <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-      Layouts
+      주문조회
       <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
      </a>
      <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
       <nav class="sb-sidenav-menu-nested nav">
-       <a class="nav-link" href="layout-static.html">Static Navigation</a>
-       <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+       <a class="nav-link" href="/changeOrder">발주확인</a>
+       <a class="nav-link" href="layout-sidenav-light.html">배송중</a>
+       <a class="nav-link" href="layout-sidenav-light.html">배송완료</a>
       </nav>
      </div>
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -126,10 +128,10 @@
  <div id="layoutSidenav_content">
   <main>
    <div class="container-fluid">
-    <h1 class="mt-4">Static Navigation</h1>
+    <h1 class="mt-4">주문상세정보</h1>
     <ol class="breadcrumb mb-4">
-     <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-     <li class="breadcrumb-item active">Static Navigation</li>
+     <li class="breadcrumb-item"><a href="/adminboard">전체신규주문</a></li>
+     <li class="breadcrumb-item active">주문상세정보</li>
     </ol>
     <div class="card mb-4">
      <div class="card-body">
@@ -204,13 +206,13 @@
        </tbody>
 
       </table>
-      <label for="jb-input-text">운송장번호</label>
-      <select name="delivery_company">
-       <option value="">CJ대한통운</option>
-      </select>
-      <input type="text" id="deliveryNumberTx" >
-      <input class="delivery_button" type="button"  onclick='printDeliveryNumb();'>발송확인</input>
+<!--      <label for="jb-input-text">운송장번호</label>-->
+<!--      <select name="delivery_company">-->
+<!--       <option value="">CJ대한통운</option>-->
+<!--      </select>-->
+<!--      <input type="text" id="deliveryNumberTx" >-->
       <div>
+       <input class="delivery_button" type="button" onclick="printDeliveryNumb('<%= selectedId %>');" value="발주확인"/>
       </div>
 <!--      <p class="mb-0">-->
 <!--       This page is an example of using static navigation. By removing the-->
@@ -241,16 +243,16 @@
 </div>
 
 <script>
- function printDeliveryNumb() {
+ function printDeliveryNumb(id) {
+  alert('클릭 :' + id);
+
   var form = document.getElementById('sending_delivery');
-  var setValue = document.getElementById('deliveryNumb');
-  setValue.value = document.getElementById("deliveryNumberTx").value;
+  // var setValue = document.getElementById('deliveryNumb');
+  // setValue.value = document.getElementById("deliveryNumberTx").value;
 
   var userDoc = document.getElementById('userDocId');
-  userDoc.value  = '<%= contentId %>';
-  alert('<%= contentId %>');
+  userDoc.value  = id;
 
-  console.log("딜리버리 :" + setValue );
   form.action = "/adminboard";
   form.method =  "POST";
   form.submit();
