@@ -5,10 +5,10 @@ var firestore = require('./firestoreConfig');
 const db = firestore.firestore();
 let ref = db.collection('payment');
 
+
 router.post('/', function (req,res,next) {
     var selectedId = req.body.myValue;
     console.log("쉽게: "+ selectedId);
-
     let refDoc = ref.doc(selectedId);
 
     refDoc.get()

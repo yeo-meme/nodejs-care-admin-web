@@ -157,16 +157,19 @@
        </tr>
        <tr align="center">
         <th bgcolor="#D4F4FA">주문상태</th>
-        <td colspan="4"><%= snapshot.data().orderStatus%></td>
+        <td ><%= snapshot.data().orderStatus%></td>
+        <td ><select name="deliveryCom">
+         <option value="cj">CJ 대한통운 </select></td>
+        <td ><input type="text" name="deliveryNum">
+         <input class="delivery_button" type="button" onclick="printDeliveryNumb('<%= selectedId %>');" value="발주확인"/>
+        </td>
        </tr>
 
        <tr align="center" >
         <th bgcolor="#D4F4FA">구매자명</th>
-        <th colspan="4"><%= snapshot.data().orderer%></th>
-       </tr>
-       <tr align="center">
-        <th bgcolor="#D4F4FA">구매자 ID</th>
-        <th colspan="4"><%= snapshot.data().ordererId%></th>
+        <td ><%= snapshot.data().orderer%></td>
+        <td bgcolor="#D4F4FA">구매자 ID</td>
+        <td ><%= snapshot.data().ordererId%></td>
        </tr>
        <tr align="center" >
         <th bgcolor="#D4F4FA">옵션</th>
@@ -179,7 +182,6 @@
         <th colspan="4"><%= snapshot.data().totalPrice%></th>
        </tr>
        </tbody>
-
       </table>
 
 
