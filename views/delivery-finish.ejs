@@ -73,22 +73,22 @@
                 <div id="layoutSidenav_content">
                     <main>
                         <div class="container-fluid">
-                            <h1 class="mt-4">Tables</h1>
+                            <h1 class="mt-4">완료된 주문서</h1>
                             <ol class="breadcrumb mb-4">
-                                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Tables</li>
+                                <li class="breadcrumb-item"><a href="/delivery-page">배송중인 주문서</a></li>
+                                <li class="breadcrumb-item active">배송 완료</li>
                             </ol>
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                                   고객님께 상품배송이 완료된 주문서입니다. 새로 들어온 주문은
+                                    <a target="_blank" href="/adminboard">신규주문</a> 에서 확인해보세요.
                                     .
                                 </div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table mr-1"></i>
-                                    DataTable Example
+                                    완료처리된 주문서
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -96,53 +96,47 @@
                                             <thead>
                                             <tr>
                                                 <th>주문번호</th>
-                                                <th>주문날짜</th>
-                                                <th>배송상태</th>
-                                                <th>주문자</th>
+                                                <th>주문일시</th>
+                                                <th>주문상태</th>
+                                                <th>상품번호</th>
                                                 <th>상품명</th>
-                                                <th>운송장번호</th>
+                                                <th>옵션</th>
+                                                <th>수량</th>
+                                                <th>구매자명</th>
+                                                <th>수취인명</th>
                                             </tr>
                                             </thead>
-                                            <tfoot>
-                                            <tr>
-                                                <th>주문번호</th>
-                                                <th>주문날짜</th>
-                                                <th>배송상태</th>
-                                                <th>주문자</th>
-                                                <th>상품명</th>
-                                                <th>운송장번호</th>
-                                            </tr>
-                                            </tfoot>
+
                                             <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
+<!--                                            <tr>-->
+<!--                                                <td>Tiger Nixon</td>-->
+<!--                                                <td>System Architect</td>-->
+<!--                                                <td>Edinburgh</td>-->
+<!--                                                <td>61</td>-->
+<!--                                                <td>2011/04/25</td>-->
+<!--                                                <td>$320,800</td>-->
+<!--                                            </tr>-->
                                             <% snapshot.forEach( doc =>{ %>
                                                 <!--데이터 반복시작-->
                                                 <tr>
                                                     <td> <input type="checkbox" name="vehicle" id="vehicle" value='<%= doc.id %>' onchange="toggleMa(this)" /></td>
                                                     <td type="text"><%= doc.data().orderNumber %> </td>
-                                                    <td> <a href="#" onclick="checkStatus('<%= doc.data().deliveryNumber%>');">
-                                                            <%= doc.data().deliveryNumber %></a></td>
-                                                    <td> <%= doc.data().productNumber %></td>
-                                                    <td> <%= doc.data().productName %></td>
                                                     <% if( doc.data().orderStatus == '0') { %>
-                                                        <td> "새주문"</td>
+                                                    <td> "새주문"</td>
                                                     <% } else if (doc.data().orderStatus == '1') { %>
                                                         <td> "발송중" </td>
                                                     <% } else if (doc.data().orderStatus == '2') { %>
                                                         <td> "완료" </td>
 
                                                     <% } %>
+<!--                                                    <td> <a href="#" onclick="checkStatus('<%= doc.data().deliveryNumber%>');">-->
+<!--                                                            <%= doc.data().deliveryNumber %></a></td>-->
+                                                    <td> <%= doc.data().productNumber %></td>
+                                                    <td> <%= doc.data().productName %></td>
                                                     <td> <%= doc.data().option %> </td>
                                                     <td> <%= doc.data().amount %> </td>
                                                     <td> <%= doc.data().oderer %> </td>
-                                                    <td> <input type="button" value="배송완료" onclick="deliveryComplete('<%= doc.id%>')"> </td>
+                                                    <td> <%= doc.data().oderer %> </td>
                                                 </tr>
                                             <% }); %>
 
