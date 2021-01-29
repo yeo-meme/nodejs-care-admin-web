@@ -125,7 +125,7 @@
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body">배송중</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="/delivery-page">View Details</a>
                                         <div class="small text-white"><svg class="svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
                                     </div>
                                 </div>
@@ -134,7 +134,7 @@
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">발송 완료</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="/delivery-finish">View Details</a>
                                         <div class="small text-white"><svg class="svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
                                     </div>
                                 </div>
@@ -177,19 +177,19 @@
                                     <th>수취인명</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>주문번호</th>
-                                    <th>주문일시</th>
-                                    <th>주문상태</th>
-                                    <th>상품번호</th>
-                                    <th>상품명</th>
-                                    <th>옵션</th>
-                                    <th>수량</th>
-                                    <th>구매자명</th>
-                                    <th>수취인명</th>
-                                </tr>
-                                </tfoot>
+<!--                                <tfoot>-->
+<!--                                <tr>-->
+<!--                                    <th>주문번호</th>-->
+<!--                                    <th>주문일시</th>-->
+<!--                                    <th>주문상태</th>-->
+<!--                                    <th>상품번호</th>-->
+<!--                                    <th>상품명</th>-->
+<!--                                    <th>옵션</th>-->
+<!--                                    <th>수량</th>-->
+<!--                                    <th>구매자명</th>-->
+<!--                                    <th>수취인명</th>-->
+<!--                                </tr>-->
+<!--                                </tfoot>-->
                                 <tbody>
                                 <% if (!snapshot.empty) {%>
                                     <% snapshot.forEach( doc =>{ %>
@@ -198,7 +198,11 @@
                                         <td type="text" >
                                             <a href="#" onclick="sendDetailBoard('<%= doc.id %>');"> <%= doc.data().orderNumber %>  </a> </td>
                                         <td> <%= doc.data().oderDate %></td>
-                                        <td> <%= doc.data().productNumber %></td>
+                                        <% if( doc.data().orderStatus == '0') { %>
+                                            <td> 신규주문</td>
+                                        <% } else if (doc.data().ordeerStatus == '1') { %>
+                                            <td> "발송중" </td>
+                                        <% } %>
                                         <td> <%= doc.data().productName %></td>
                                         <% if( doc.data().orderStatus == '0') { %>
                                             <td> "새주문"</td>

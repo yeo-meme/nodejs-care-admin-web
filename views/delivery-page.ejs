@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Tables - SB Admin</title>
+    <title>날라주 동물등록대행 관리자</title>
     <link href="css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -67,101 +67,80 @@
             </div>
         </nav>
     </div>
-    <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid">
-                <h1 class="mt-4">발주확인주문</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/adminboard">신규주문조회</a></li>
-                    <li class="breadcrumb-item active" >발주확인주문</li>
-                </ol>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        발주확인된 주문번호를 클릭하셔서 운송장번호를 입력하시면
-                        <a target="_blank" href="https://datatables.net/">배송중</a> 주문으로 처리됩니다
-                        .
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table mr-1"></i>
-                        발주확인주문서서                    </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4">Tables</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Tables</li>
+                        </ol>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
+                                <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                                .
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table mr-1"></i>
+                                DataTable Example
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>주문번호</th>
+                                            <th>택배사</th>
+                                            <th>운송장번호</th>
+                                            <th>상품명</th>
+                                            <th>수량</th>
+                                            <th>주문자연락처</th>
+                                            <th>수량</th>
+                                            <th>주문자연락처</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% snapshot.forEach( doc =>{ %>
+                                            <!--데이터 반복시작-->
+                                            <tr>
+                                                <td type="text"><%= doc.data().orderNumber %> </td>
+                                                <td type="text">CJ </td>
+                                                <td> <a href="#" onclick="checkStatus('<%= doc.data().deliveryNumber%>');">
+                                                        <%= doc.data().deliveryNumber %></a></td>
+                                                <td> <%= doc.data().productName %></td>
+                                                <td> <%= doc.data().amount %> </td>
+                                                <td> <%= doc.data().orderer %></td>
+                                                <td> <%= doc.data().ordererPhone %> </td>
+                                                <td> <input type="button" value="배송완료" onclick="deliveryComplete('<%= doc.id%>')"> </td>
+                                            </tr>
+                                        <% }); %>
+                                        </tr>
 
-
-                    <!--임시-->
-                    <form role="form" id="check-form" action="/deliveryPage" method="post"  autocomplete="on">
-                        <input type="hidden" name="checkedDoc" id="checkedDoc" value="">
-                    </form>
-
-                    <form role="form" id="complete-form" autocomplete="on">
-                        <input type="hidden" name="comDoc" id="comDoc" value="">
-                    </form>
-
-
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>주문번호</th>
-                                    <th>택배사</th>
-                                    <th>운송장번호</th>
-                                    <th>상품명</th>
-                                    <th>주문자</th>
-                                    <th>주문자연락처</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>주문번호</th>
-                                    <th>택배사</th>
-                                    <th>운송장번호</th>
-                                    <th>상품명</th>
-                                    <th>주문자</th>
-                                    <th>주문자연락처</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                    <% snapshot.forEach( doc =>{ %>
-                                        <!--데이터 반복시작-->
-                                <tr>
-                                    <td> <input type="checkbox" name="vehicle" id="vehicle" value='<%= doc.id %>' onchange="toggleMa(this)" /></td>
-                                    <td type="text"><%= doc.data().orderNumber %> </td>
-                                    <td> <a href="#" onclick="checkStatus('<%= doc.data().deliveryNumber%>');">
-                                            <%= doc.data().deliveryNumber %></a></td>
-                                    <td> <%= doc.data().productNumber %></td>
-                                    <td> <%= doc.data().productName %></td>
-                                    <% if( doc.data().orderStatus == '0') { %>
-                                        <td> "새주문"</td>
-                                    <% } else if (doc.data().orderStatus == '1') { %>
-                                        <td> "발송중" </td>
-                                    <% } else if (doc.data().orderStatus == '2') { %>
-                                        <td> "완료" </td>
-
-                                    <% } %>
-                                    <td> <%= doc.data().option %> </td>
-                                    <td> <%= doc.data().amount %> </td>
-                                    <td> <%= doc.data().oderer %> </td>
-                                    <td> <input type="button" value="배송완료" onclick="deliveryComplete('<%= doc.id%>')"> </td>
-                                </tr>
-                                    <% }); %>
-                                </tbody>
-                            </table>
-                            <a href="https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no=637580924934" target="_blank">배송조회</a>
-<!--                            <input type="button" onclick="completeDeliveryNumb();" value="발주확인"/>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </main>
+<!--                <footer class="py-4 bg-light mt-auto">-->
+<!--                    <div class="container-fluid">-->
+<!--                        <div class="d-flex align-items-center justify-content-between small">-->
+<!--                            <div class="text-muted">Copyright &copy; Your Website 2020</div>-->
+<!--                            <div>-->
+<!--                                <a href="#">Privacy Policy</a>-->
+<!--                                &middot;-->
+<!--                                <a href="#">Terms &amp; Conditions</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </footer>-->
             </div>
+
         </main>
 <!--        <footer class="py-4 bg-light mt-auto">-->
 <!--            <div class="container-fluid">-->
@@ -175,7 +154,6 @@
 <!--                </div>-->
 <!--            </div>-->
 <!--        </footer>-->
-    </div>
 </div>
 <script>
 
