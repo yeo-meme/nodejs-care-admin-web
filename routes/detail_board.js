@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var firestore = require('./firestoreConfig');
+var firestore = require('../config/firestoreConfig');
+var utils = require('../config/utils');
 
 const db = firestore.firestore();
 let ref = db.collection('payment');
 
 
-router.post('/', function (req,res,next) {
+router.post('/', utils.ensureAuthenticated, function (req,res,next) {
     var selectedId = req.body.myValue;
     console.log("쉽게: "+ selectedId);
     let refDoc = ref.doc(selectedId);

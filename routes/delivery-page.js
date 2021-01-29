@@ -1,13 +1,12 @@
-
-
 var express = require('express');
 var router = express.Router();
-var firestore = require('./firestoreConfig');
+var firestore = require('../config/firestoreConfig');
+var utils = require('../config/utils');
 
 const db = firestore.firestore();
 let ref = db.collection('payment');
 
-router.get('/', function (req,res,next) {
+router.get('/',  utils.ensureAuthenticated, function (req,res,next) {
 
     console.log("gegetget")
     let query = ref.orderBy('timestamp','desc');
@@ -25,7 +24,7 @@ router.get('/', function (req,res,next) {
     });
 });
 
-router.post('/', function (req,res,next) {
+router.post('/', utils.ensureAuthenticated, function (req,res,next) {
     var id = req.body.deliveryStatus;
     console.log("null :"+ id);
 

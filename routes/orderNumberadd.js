@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var firestore = require('./firestoreConfig');
+var firestore = require('../config/firestoreConfig');
 
 const db = firestore.firestore();
 let ref = db.collection('payment');
