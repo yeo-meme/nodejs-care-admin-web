@@ -55,9 +55,8 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/changeOrder">발주 확인</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">배송중</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">배송완료</a>
+                            <a class="nav-link" href="/delivery-page">배송중</a>
+                            <a class="nav-link" href="/delivery-finish">배송완료</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -228,7 +227,6 @@
                                         <td> <%= doc.data().oderer %></td>
                                         <td> <%= doc.data().receiver %></td>
                                         <% }); %>
-                                        <script>console.log("orderer", '=>', doc.data().orderer);</script>
                                     </tr>
                                 <%} else {%>
                                     <tr>

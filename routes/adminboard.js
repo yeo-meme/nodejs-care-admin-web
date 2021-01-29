@@ -6,7 +6,6 @@ const db = firestore.firestore();
 let ref = db.collection('payment');
 
 router.get('/', function (req,res, next) {
-
     let query = ref.orderBy('timestamp','desc');
     query.where('orderStatus', '==', 0).get()
         .then(snapshot => {
@@ -25,10 +24,12 @@ router.get('/', function (req,res, next) {
 router.post('/',function (req,res,next) {
     // var value = req.body.deliveryNumb;
     var docValue = req.body.userDocId;
-    // console.log("post arrvied :" +value + "id :" + docValue);
+    var numb = req.body.deliveryNumb;
+    console.log("post userDocId :" +docValue + "deliveryNumb :" + numb);
 
     ref.doc(docValue).update({
-        orderStatus: 1
+        orderStatus: 1,
+        deliveryNumber : numb
     });
     res.redirect('adminboard');
 });

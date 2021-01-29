@@ -13,9 +13,10 @@ var adminBoardRouter = require('./routes/adminboard');
 var resultHomeRouter = require('./routes/resulthome');
 var detailBoardRouter = require('./routes/detail_board');
 var sendNumberRouter = require('./routes/sendNumberPage');
-var changeOrderRouter = require('./routes/changeOrder');
+var deliveryPageRouter = require('./routes/delivery-page');
 var pageCountRouter = require('./routes/pageCount');
 var orderNumberRouter = require('./routes/orderNumberadd');
+var deliveryCompleteRouter = require('./routes/delivery-finish');
 
 
 var app = express();
@@ -42,9 +43,10 @@ app.use('/adminboard', adminBoardRouter);
 app.use('/resulthome',resultHomeRouter);
 app.use('/detail_board',detailBoardRouter);
 app.use('/sendNumberPage',sendNumberRouter);
-app.use('/changeOrder', changeOrderRouter);
+app.use('/delivery-page', deliveryPageRouter);
 app.use('/pageCount', pageCountRouter);
 app.use('/orderNumberadd', orderNumberRouter);
+app.use('/delivery-finish', deliveryCompleteRouter);
 
 
 

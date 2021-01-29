@@ -55,9 +55,8 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/changeOrder">발주확인</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">배송중</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">배송완료</a>
+                            <a class="nav-link" href="/delivery-page">배송중</a>
+                            <a class="nav-link" href="/delivery-finish">배송완료</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -113,8 +112,8 @@
             <div class="container-fluid">
                 <h1 class="mt-4">발주확인주문</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.html">신규주문조회</a></li>
-                    <li class="breadcrumb-item active">발주확인주문</li>
+                    <li class="breadcrumb-item"><a href="/adminboard">신규주문조회</a></li>
+                    <li class="breadcrumb-item active" >발주확인주문</li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
@@ -127,26 +126,38 @@
                     <div class="card-header">
                         <i class="fas fa-table mr-1"></i>
                         발주확인주문서서                    </div>
+
+
+                    <!--임시-->
+                    <form role="form" id="check-form" action="/deliveryPage" method="post"  autocomplete="on">
+                        <input type="hidden" name="checkedDoc" id="checkedDoc" value="">
+                    </form>
+
+                    <form role="form" id="complete-form" autocomplete="on">
+                        <input type="hidden" name="comDoc" id="comDoc" value="">
+                    </form>
+
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <th>주문번호</th>
-                                    <th>주문날짜</th>
+                                    <th>택배사</th>
+                                    <th>운송장번호</th>
                                     <th>상품명</th>
                                     <th>주문자</th>
-                                    <th>수취인</th>
                                     <th>주문자연락처</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>주문번호</th>
-                                    <th>주문날짜</th>
+                                    <th>택배사</th>
+                                    <th>운송장번호</th>
                                     <th>상품명</th>
                                     <th>주문자</th>
-                                    <th>수취인</th>
                                     <th>주문자연락처</th>
                                 </tr>
                                 </tfoot>
@@ -163,25 +174,30 @@
                                     <% snapshot.forEach( doc =>{ %>
                                         <!--데이터 반복시작-->
                                 <tr>
-                                    <td type="text" >
-                                        <a href="#" onclick="sendDetailBoard('<%= doc.id %>');"> <%= doc.data().orderNumber %>  </a> </td>
-                                    <td> <%= doc.data().oderDate %></td>
+                                    <td> <input type="checkbox" name="vehicle" id="vehicle" value='<%= doc.id %>' onchange="toggleMa(this)" /></td>
+                                    <td type="text"><%= doc.data().orderNumber %> </td>
+                                    <td> <a href="#" onclick="checkStatus('<%= doc.data().deliveryNumber%>');">
+                                            <%= doc.data().deliveryNumber %></a></td>
                                     <td> <%= doc.data().productNumber %></td>
                                     <td> <%= doc.data().productName %></td>
                                     <% if( doc.data().orderStatus == '0') { %>
                                         <td> "새주문"</td>
-                                    <% } else if (doc.data().ordeerStatus == '1') { %>
+                                    <% } else if (doc.data().orderStatus == '1') { %>
                                         <td> "발송중" </td>
+                                    <% } else if (doc.data().orderStatus == '2') { %>
+                                        <td> "완료" </td>
+
                                     <% } %>
-                                    <td> <%= doc.data().option %></td>
-                                    <td> <%= doc.data().amount %></td>
-                                    <td> <%= doc.data().oderer %></td>
-                                    <td> <%= doc.data().receiver %></td>
+                                    <td> <%= doc.data().option %> </td>
+                                    <td> <%= doc.data().amount %> </td>
+                                    <td> <%= doc.data().oderer %> </td>
+                                    <td> <input type="button" value="배송완료" onclick="deliveryComplete('<%= doc.id%>')"> </td>
                                 </tr>
                                     <% }); %>
-
                                 </tbody>
                             </table>
+                            <a href="https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no=637580924934" target="_blank">배송조회</a>
+<!--                            <input type="button" onclick="completeDeliveryNumb();" value="발주확인"/>-->
                         </div>
                     </div>
                 </div>
@@ -201,6 +217,83 @@
         </footer>
     </div>
 </div>
+<script>
+
+    // var resultValue = [];
+    // function toggleMa(el) {
+    //     var checkbox = document.getElementById("vehicle");
+    //     var checkedValue = document.getElementById("checkedDoc");
+    //     if (el.checked) {
+    //         resultValue.push(el.value + ",");
+    //         console.log("chekc value :" +  resultValue);
+    //     }
+    // }
+    //
+    // let checkbox;
+    //
+    // window.onload = function() {
+    //     checkbox = document.getElementById("vehicle");
+    // };
+    function deliveryComplete(id) {
+
+
+        var form = document.getElementById('complete-form');
+        var setValue = document.getElementById('comDoc');
+
+        setValue.value = id;
+
+        alert(id);
+
+        form.action = "/delivery-page";
+        form.method = 'POST';
+        form.submit();
+
+    }
+
+    //Cj 배송조회
+    function checkStatus(number) {
+        var url = "https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no="+number;
+        window.open(url);
+    }
+
+    function completeDeliveryNumb() {
+
+        var checkbox = document.getElementsByName("vehicle");
+        var size = checkbox.length;
+        var form = document.getElementById("check-form");
+
+
+        var checkedList = [];
+        var temValue;
+        var trueValue = "";
+        var resultValue = "ddd";
+        var checkedValue = document.getElementById("checkedDoc");
+
+        var lii = resultValue;
+
+        checkedValue.value = lii;
+
+        // for (var i=0; i<=size; i++) {              //checked
+        //     if (checkbox[i].checked === true) {
+        //         trueValue = document.getElementsByName("vehicle")[i].value;
+        //         resultValue = trueValue + ",";
+        //         alert("result Value :" + resultValue +"trueValue :" + trueValue);
+        //         console.log("result Value :"+ resultValue +"trueValue :" + trueValue);
+        //
+        //         checkedValue.value = resultValue;
+        //         console.log("checkedValue.value :"+ checkedValue.value);
+        //         // document.getElementById("checkedDoc")[i].setAttribute('id',checkedList[i]);
+        //         // alert(trueValue);
+        //     }
+        // }
+        form.action = "/delivery-page";
+        form.method =  "POST";
+        form.submit();
+    }
+
+</script>
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
