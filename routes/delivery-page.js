@@ -26,7 +26,7 @@ router.get('/', function (req,res,next) {
 });
 
 router.post('/', function (req,res,next) {
-    var id = req.body.comDoc;
+    var id = req.body.deliveryStatus;
     console.log("null :"+ id);
 
     ref.doc(id).update({

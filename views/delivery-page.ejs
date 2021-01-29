@@ -88,6 +88,11 @@
                                 <i class="fas fa-table mr-1"></i>
                                 주문서 현황
                             </div>
+
+                            <!--임시 -->
+                            <form role="form" id="complete-form" autocomplete="on">
+                                <input type="hidden"  name="deliveryStatus" id="deliveryStatus" value=""/>
+                            </form>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -176,7 +181,7 @@
 
 
         var form = document.getElementById('complete-form');
-        var setValue = document.getElementById('comDoc');
+        var setValue = document.getElementById('deliveryStatus');
 
         setValue.value = id;
 
