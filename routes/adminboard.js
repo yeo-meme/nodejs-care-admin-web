@@ -12,6 +12,7 @@ router.get('/', utils.ensureAuthenticated, function (req,res, next) {
         .then(snapshot => {
             if (snapshot.empty) {
                 console.log("no order");
+                res.render("adminboard",{snapshot: snapshot});
                 return;
             }
             res.render("adminboard",{snapshot: snapshot});

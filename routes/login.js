@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/login', function (req,res, next) {
     db.auth()
-        .signInWithEmailAndPassword(req.body.loginemail,req.body.loginpassword)
+        .signInWithEmailAndPassword(req.body.email,req.body.password)
         .then(function (user) {
             console.log("로그인 성공")
 

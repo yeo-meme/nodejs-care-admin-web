@@ -8,7 +8,6 @@ var session = require('express-session');
 var passport = require('passport');
 
 
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signUpRouter = require('./routes/signup');
@@ -21,8 +20,9 @@ var deliveryPageRouter = require('./routes/delivery-page');
 var pageCountRouter = require('./routes/pageCount');
 var orderNumberRouter = require('./routes/orderNumberadd');
 var deliveryCompleteRouter = require('./routes/delivery-finish');
-var localAuthaaa = require("./config/localStrategy");
-var paaAuthaaa = require("./config/passport");
+var logoutRouter = require('./routes/logout');
+
+require("./config/passport")(passport);
 
 var app = express();
 
@@ -35,7 +35,9 @@ app.use(session({
 
 // passport init , flash message use
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session());  // 로그인 세션 유지
+var flash = require('connect-flash');
+app.use(flash());
 
 
 // view engine setup
@@ -48,6 +50,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(logger('dev'));
 app.use(cookieParser());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname,'css')));
 
@@ -65,9 +71,7 @@ app.use('/delivery-page', deliveryPageRouter);
 app.use('/pageCount', pageCountRouter);
 app.use('/orderNumberadd', orderNumberRouter);
 app.use('/delivery-finish', deliveryCompleteRouter);
-app.use('/localStrategy',localAuthaaa);
-app.use('/passport',paaAuthaaa);
-
+app.use('/logout', logoutRouter);
 
 
 
