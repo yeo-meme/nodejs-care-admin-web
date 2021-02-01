@@ -25,11 +25,6 @@ router.post('/', utils.ensureAuthenticated, function (req,res,next) {
         console.log("error ", err);
     });
 
-    // refDoc.listCollections().then(collections => {
-    //     collections.forEach(collection => {
-    //         console.log('Found subcollection with id:', collection.id);
-    //     });
-    // });
 
 });
 
