@@ -19,6 +19,7 @@ var deliveryPageRouter = require('./routes/delivery-page');
 var orderNumberRouter = require('./routes/orderNumberadd');
 var deliveryCompleteRouter = require('./routes/delivery-finish');
 var logoutRouter = require('./routes/logout');
+// var utilsRouter = require('./config/utils');
 
 require("./config/passport")(passport);
 
@@ -68,6 +69,7 @@ app.use('/delivery-page', deliveryPageRouter);
 app.use('/orderNumberadd', orderNumberRouter);
 app.use('/delivery-finish', deliveryCompleteRouter);
 app.use('/logout', logoutRouter);
+// app.use('/utilsRouter', utilsRouter);
 
 
 

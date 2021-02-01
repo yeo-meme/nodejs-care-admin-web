@@ -18,7 +18,17 @@ firebase.initializeApp(firebaseConfig);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+res.render('index');
+    req.logout();
+    req.session.destroy(function (err) {
+        if (err) {
+            return next(err);
+        }
+        // destroy session data
+        req.session = null;
+
+        // redirect to login
+    });
 });
 
 router.post('/', passport.authenticate('store',
