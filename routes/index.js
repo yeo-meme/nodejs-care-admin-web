@@ -26,7 +26,6 @@ res.render('index');
         }
         // destroy session data
         req.session = null;
-
         // redirect to login
     });
 });

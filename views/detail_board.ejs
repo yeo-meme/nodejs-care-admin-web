@@ -14,15 +14,40 @@
 
  <style>
   table {
-   width: 100%;
+   width: 70%;
+   border-collapse: collapse;
   }
-  table, th, td {
-   border: 1px solid #bcbcbc;
+  th {
+   width: 200px;
+  }
+
+  td {
+   white-space: nowrap;
   }
   th {
    padding : 1em;
   }
 
+  .d-box {
+   width: 400px;
+  }
+
+  th.scaffolding {
+   width: 20px;
+  }
+
+  .info-customer {
+   margin-top: 50px;
+  }
+
+  .spacing {
+   width: 500px;
+  }
+
+  .point-color {
+   background-color: #D9E5FF;
+   width: 20%;
+  }
 
  </style>
 
@@ -117,7 +142,7 @@
    </div>
    <div class="sb-sidenav-footer">
     <div class="small">Logged in as:</div>
-    Start Bootstrap
+    Nalazoo
    </div>
   </nav>
  </div>
@@ -140,6 +165,8 @@
        <input type="hidden"  name="userDocId" id="userDocId" value=""/>
       </form>
 
+      <div>
+
       <caption>상품주문정보 조회</caption>
       <table border="1">
 
@@ -147,84 +174,88 @@
        <!--데이터 반복시작-->
 
         <tr align="center">
-        <th bgcolor="#D4F4FA">상품명</th>
+        <th class="point-color">상품명</th>
         <td colspan="4"><%= snapshot.data().productName%></td>
        </tr>
        <tr align="center">
-        <th bgcolor="#D4F4FA">주문상태</th>
-        <td ><%= snapshot.data().orderStatus%></td>
+        <th class="point-color">주문상태</th>
+        <td class="value-section"><%= snapshot.data().orderStatus%></td>
         <td ><select name="deliveryCom">
          <option value="cj">CJ 대한통운 </select></td>
-        <td ><input type="text" name="deliveryNumberTx" id="deliveryNumberTx">
+        <td class="d-box"><input type="text" name="deliveryNumberTx" id="deliveryNumberTx">
          <input class="delivery_button" type="button"
                 onclick="printDeliveryNumb('<%= selectedId %>');" value="발주확인"/>
         </td>
        </tr>
 
        <tr align="center" >
-        <th bgcolor="#D4F4FA">구매자명</th>
-        <td ><%= snapshot.data().orderer%></td>
-        <td bgcolor="#D4F4FA">구매자 ID</td>
-        <td ><%= snapshot.data().ordererId%></td>
+        <th class="point-color" >구매자명</th>
+        <td class="value-section"><%= snapshot.data().orderer%></td>
+        <td class="point-color">구매자 ID</td>
+        <td class="value-section"><%= snapshot.data().ordererId%></td>
        </tr>
        <tr align="center" >
-        <th bgcolor="#D4F4FA">옵션</th>
-        <th><%= snapshot.data().option%></th>
-        <th bgcolor="#D4F4FA">주문수량</th>
-        <th><%= snapshot.data().amount%></th>
+        <th class="point-color" >옵션</th>
+        <th class="value-section"><%= snapshot.data().option%></th>
+        <th class="point-color">주문수량</th>
+        <th class="value-section"><%= snapshot.data().amount%></th>
        </tr>
        <tr align="center">
-        <th bgcolor="#D4F4FA">총 상품금액</th>
+        <th class="point-color">총 상품금액</th>
         <th colspan="4"><%= snapshot.data().totalPrice%></th>
        </tr>
        </tbody>
       </table>
-
-
-      <caption>배송지 정보</caption>
-      <table border="1" >
-       <tbody>
-
-       <tr align="center" >
-       <th bgcolor="#D4F4FA">수취인명</th>
-       <th ><% snapshot.data().receiver%></th>
-       </tr>
-       <tr align="center" >
-       <th bgcolor="#D4F4FA">연락처</th>
-       <th ><% snapshot.data().ordererPhone%></th>
-       </tr>
-       <tr align="center">
-       <th bgcolor="#D4F4FA">배송지</th>
-       <th ><% snapshot.data().ordererAddress%></th>
-       </tr>
-       <tr align="center" >
-       <th bgcolor="#D4F4FA">배송메모</th>
-       <th ><% snapshot.data().receiverMemo %></th>
-       </tr>
-       </tbody>
-
-      </table>
-      <div>
-       <input class="delivery_button" type="button" onclick="printDeliveryNumb('<%= selectedId %>');" value="발주확인"/>
       </div>
+      <div class="info-customer">
+       <div>
+
+        <caption>배송지 정보</caption>
+        <table border="1" >
+         <tbody>
+         <tr  align="center" >
+          <th  class='point-color' class="point-color">수취인명</th>
+          <th ><% snapshot.data().receiver%></th>
+         </tr>
+         <tr  align="center" >
+          <th class='point-color' class="point-color">연락처</th>
+          <th ><% snapshot.data().ordererPhone%></th>
+         </tr>
+         <tr  align="center">
+          <th class='point-color' class="point-color">배송지</th>
+          <th ><% snapshot.data().ordererAddress%></th>
+         </tr>
+         <tr  align="center" >
+          <th class='point-color' class="point-color">배송메모</th>
+          <th ><% snapshot.data().receiverMemo %></th>
+         </tr>
+         </tbody>
+
+        </table>
+       </div>
+      </div>
+
      </div>
     </div>
-    <div style="height: 100vh"></div>
-    <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+
+
+
+<!--    <div style="height: 100vh"></div>-->
+<!--    <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>-->
    </div>
   </main>
-  <footer class="py-4 bg-light mt-auto">
-   <div class="container-fluid">
-    <div class="d-flex align-items-center justify-content-between small">
-     <div class="text-muted">Copyright &copy; Your Website 2020</div>
-     <div>
-      <a href="#">Privacy Policy</a>
-      &middot;
-      <a href="#">Terms &amp; Conditions</a>
-     </div>
-    </div>
-   </div>
-  </footer>
+<!--  <footer class="py-4 bg-light mt-auto">-->
+<!--   <div class="container-fluid">-->
+<!--    <div class="d-flex align-items-center justify-content-between small">-->
+<!--     <div class="text-muted">Copyright &copy; Your Website 2020</div>-->
+<!--     <div>-->
+<!--      <a href="#">Privacy Policy</a>-->
+<!--      &middot;-->
+<!--      <a href="#">Terms &amp; Conditions</a>-->
+<!--     </div>-->
+<!--    </div>-->
+<!--   </div>-->
+<!--  </footer>-->
  </div>
 </div>
 
